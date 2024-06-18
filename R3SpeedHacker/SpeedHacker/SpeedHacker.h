@@ -46,8 +46,6 @@ private:
 	fpQueryPerformanceCounter pfnQueryPerformanceCounter = nullptr;
 	//拦截后的 QueryPerformanceCounter 函数
 	static BOOL WINAPI SelfQueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount);
-	
-public:
 
 public:
 	//获取变速倍率
