@@ -1,7 +1,5 @@
 #include "SpeedHacker.h"
 
-std::shared_ptr<SpeedHacker> speedhacker = nullptr;
-
 
 SpeedHacker::SpeedHacker()
 {
@@ -13,21 +11,21 @@ SpeedHacker::~SpeedHacker()
 
 DWORD WINAPI SpeedHacker::SelfGetTickCount()
 {
-    auto original_tick_count = speedhacker->pfnGetTickCount();
-    return static_cast<DWORD>(original_tick_count * speedhacker->GetSpeedRatio());
+    auto original_tick_count = SpeedHacker::GetInstance()->pfnGetTickCount();
+    return static_cast<DWORD>(original_tick_count * SpeedHacker::GetInstance()->GetSpeedRatio());
 }
 
 ULONGLONG WINAPI SpeedHacker::SelfGetTickCount64()
 {
-    auto original_tick_count64 = speedhacker->pfnGetTickCount64();
-    return static_cast<ULONGLONG>(original_tick_count64 * speedhacker->GetSpeedRatio());
+    auto original_tick_count64 = SpeedHacker::GetInstance()->pfnGetTickCount64();
+    return static_cast<ULONGLONG>(original_tick_count64 * SpeedHacker::GetInstance()->GetSpeedRatio());
 }
 
 BOOL WINAPI SpeedHacker::SelfQueryPerformanceCounter(LARGE_INTEGER* lpPerformanceCount)
 {
-    BOOL result = speedhacker->pfnQueryPerformanceCounter(lpPerformanceCount);
+    BOOL result = SpeedHacker::GetInstance()->pfnQueryPerformanceCounter(lpPerformanceCount);
     if (result)
-        lpPerformanceCount->QuadPart = static_cast<LONGLONG>(lpPerformanceCount->QuadPart * speedhacker->GetSpeedRatio());
+        lpPerformanceCount->QuadPart = static_cast<LONGLONG>(lpPerformanceCount->QuadPart * SpeedHacker::GetInstance()->GetSpeedRatio());
 
     return result;
 }

@@ -3,9 +3,9 @@
 
 void InitializeSpeedHacker()
 {
-	speedhacker = std::make_shared<SpeedHacker>();
-
-	speedhacker->InitializeSpeedHacker();
+	auto speedhacker = SpeedHacker::GetInstance();
+	if (!speedhacker->InitializeSpeedHacker())
+		::MessageBoxA(::GetActiveWindow(), "初始化加速失败", "Error", MB_OK);
 }
 
 BOOL APIENTRY DllMain(HMODULE h_module, DWORD ul_reason_for_call, LPVOID lpReserved)
